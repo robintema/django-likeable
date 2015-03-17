@@ -5,7 +5,7 @@
 #
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext as _
@@ -19,7 +19,7 @@ class Like(models.Model):
     """
 
     user = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         related_name='likes',
         help_text=_("The user who liked the particular object."),
     )
