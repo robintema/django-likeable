@@ -76,6 +76,30 @@ class Likeable(models.Model):
         Generates a like for this object by the given user.
         """
 
-        Like.objects.create(user=user, liked=self)
+        return Like.objects.create(user=user, liked=self)
 
 
+    def unlike(self, user):
+        """
+        Delete the like for this object by the given user.
+        """
+        content_type = ContentType.objects.get_for_model(self)
+        object_id = self.pk
+        try:
+            like = Like.objects.get(user=user, content_type=content_type, object_id=object_id)
+        except Like.DoesNotExist:
+            raise
+
+        return like.delete()
+
+    def liked(self, user):
+        """
+        Check if the user liked this object.
+        """
+        content_type = ContentType.objects.get_for_model(self)
+        object_id = self.pk
+        try:
+            like = Like.objects.get(user=user, content_type=content_type, object_id=object_id)
+            return True
+        except Like.DoesNotExist:
+            return False
