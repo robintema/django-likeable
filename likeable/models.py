@@ -31,8 +31,9 @@ class Like(models.Model):
         ContentType,
         help_text=_("The content type of the liked object."),
     )
-    object_id = models.PositiveIntegerField(
+    object_id = models.CharField(
         help_text=_("The primary key of the liked object."),
+        max_length=250
     )
     liked = generic.GenericForeignKey(
         'content_type',
